@@ -1,2 +1,2 @@
 have it setup as a function that takes a string containint the full text. Break it up as needed and import any libraries. 
-return the fulltext with each occurence replaced by the appropriate marker
+return the fulltext with each occurence replaced by the appropriate marker.
