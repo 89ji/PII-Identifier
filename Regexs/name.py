@@ -9,15 +9,15 @@ def removeName(text):
     #with open("ehr JMS.txt", "r") as file:
     
         redacted = []
-        for line in text:   #changed file to text
-            result = re.findall(name, line) # Find potenial first and last names
+        #for line in text:   #changed file to text
+            result = re.findall(name, text) # Find potenial first and last names
             for match in result:
                 doc = nlp(match) # Process possible names through spaCy
                 if any(ent.label_ == "PERSON" for ent in doc.ents):
                    #print(match)
                    line = line.replace(match, "*name*")  # Replace name
-            redacted.append(line)
-return ""
+        #redacted.append(text) #changed line to text
+return redacted.append(text)
 
 # Test with file output
 #with open("ehr_JMS_redacted.txt", "w") as output_file:
