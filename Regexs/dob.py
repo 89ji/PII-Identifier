@@ -13,7 +13,7 @@ def removeDOB(text):
         # DOB section
         for y in dobPhrases:
             if re.search(y, x, re.IGNORECASE):
-                print(f"Match found on line {lineNum}: DOB phrase detected.")
+                # print(f"Match found on line {lineNum}: DOB phrase detected.")
                 
                 # replacement time
                 for z in datePhrases:
