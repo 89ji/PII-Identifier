@@ -59,7 +59,7 @@ def main():
         fullText = removeDOB(fullText)
 
     if re.search("(ssn|social security)", Pii, re.IGNORECASE) is not None or Pii == "all":
-        fullText = removeDOB(fullText)
+        fullText = removeSSN(fullText)
 
     if re.search("phone", Pii, re.IGNORECASE) is not None or Pii == "all":
         fullText = remove_phone_numbers(fullText)
