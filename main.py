@@ -4,6 +4,8 @@ from numpy import full
 from Regexs.address import *
 from Regexs.email import *
 from Regexs.phone import *
+from Regexs.dob import *
+from Regexs.ssn import *
 
 import re
 
@@ -45,7 +47,7 @@ def main():
             print("Unable to read PII file")
             exit(-1)
 
-    
+
     # Going through the PII types
     if re.search("name", Pii, re.IGNORECASE) is not None or Pii == "all":
         pass
@@ -54,10 +56,10 @@ def main():
         fullText = FindAddresses(fullText)
 
     if re.search("date of birth", Pii, re.IGNORECASE) is not None or Pii == "all":
-        pass
+        fullText = removeDOB(fullText)
 
     if re.search("(ssn|social security)", Pii, re.IGNORECASE) is not None or Pii == "all":
-        pass
+        fullText = removeDOB(fullText)
 
     if re.search("phone", Pii, re.IGNORECASE) is not None or Pii == "all":
         fullText = remove_phone_numbers(fullText)
