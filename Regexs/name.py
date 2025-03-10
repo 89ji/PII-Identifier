@@ -8,7 +8,7 @@ def removeName(text):
     name = r"[A-Z][a-z]+ [A-Z][a-z]+"
     #with open("ehr JMS.txt", "r") as file:
     
-        redacted = []     # Empty list to store modified lines
+        #redacted = []     # Empty list to store modified lines
         #for line in text:   #changed file to text
             result = re.findall(name, text) # Find potenial first and last names
             for match in result:
@@ -16,7 +16,8 @@ def removeName(text):
                 if any(ent.label_ == "PERSON" for ent in doc.ents):
                    #print(match)
                    line = line.replace(match, "*name*")  # Replace name
-return redacted.append(text)    # Add modified line to list for writing back to file
+        #redacted.append(text)    # Add modified line to list for writing back to file
+return line
 
 # Test with file output
 #with open("ehr_JMS_redacted.txt", "w") as output_file:
