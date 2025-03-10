@@ -1,13 +1,12 @@
 import sys
+import re
 
-from numpy import full
 from Regexs.address import *
 from Regexs.email import *
 from Regexs.phone import *
 from Regexs.dob import *
 from Regexs.ssn import *
-
-import re
+from Regexs.nlpless_name import *
 
 def main():
     if len(sys.argv) < 2:
@@ -50,7 +49,7 @@ def main():
 
     # Going through the PII types
     if re.search("name", Pii, re.IGNORECASE) is not None or Pii == "all":
-        pass
+        fullText = FindNames(fullText)
 
     if re.search("address", Pii, re.IGNORECASE) is not None or Pii == "all":
         fullText = FindAddresses(fullText)
