@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PII Deidentifier</title>
+        <meta name="A simple frontend for our PII deidentifier" content="">
+        <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+        <link rel="stylesheet" href="/static/style.css" type="text/css">
+    </head>
+    <body>
+        <h1>DHIS Project - Group 3</h1>
+        <br>
+
+        <div class="inputContainer">
+            <div>
+                <label>Input Text</label>
+                <textarea id="inputText" placeholder="Paste medical info here" ></textarea>
+            </div>
+
+            <div>
+                <label>Output Text</label>
+                <textarea id="outputText" placeholder="Deidentified medical info will show up here" readonly="true"></textarea>
+            </div>
+        </div>
+
+        <div class="typeToggler">
+            <label>Names</label>
+            <input type="checkbox">
+        </div>
+
+        <div class="typeToggler">
+            <label>Names</label>
+            <input type="checkbox">
+        </div>
+
+
+        
+        <button onclick="sendPII()">Send</button>
+    </body>
+</html>
+
+<script>
+    async function sendPII()
+    {
+        input = document.getElementById("inputText").value;
+
+        data = 
+        {
+            text: input,
+            FilterName: true
+        };
+
+        response = await fetch(window.location.href + "PII",
+            {
+                method: "POST",
+                headers: 
+                {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        )
+        text = await response.json()
+        
+        document.getElementById("outputText").value = text["text"];
+    }
+
+    window.addEventListener('beforeunload', function(event)
+    {
+        var req = new XMLHttpRequest();
+        req.open("POST", window.location.href + "kill");
+        req.send()
+    });
+</script>
