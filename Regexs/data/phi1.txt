@@ -1,0 +1,13 @@
+Name
+Address (including street address, city, state, and zip code)
+Date of birth
+Social Security number
+*Phone number(s)
+*Email address
+
+Name------------------------------> *name*
+Address -------------------------->*address*
+Date of birth--------------------->*dob*
+Social Security number------->*ssn*
+Phone number------------------>*phone*
+Email address------------------->*email*  
