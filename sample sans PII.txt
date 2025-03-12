@@ -1,6 +1,6 @@
-Patient: Johnathan Smith
+Patient: *name*
 
-Date of Birth: 03/15/1982
+Date of Birth: *dob*
 
 Medical Record Number: 1234567
 
@@ -18,7 +18,7 @@ Chief Complaint: "Persistent cough and shortness of breath for the past week."
 
 History of Present Illness (HPI):
 
-Mr. Smith presents to the clinic with a one-week history of a dry, hacking cough and progressive shortness of breath. He reports the cough began insidiously, initially mild, but has worsened over the past three days. He denies fever, chills, or night sweats. He describes the shortness of breath as a feeling of tightness in his chest, exacerbated by exertion. He has noticed a decrease in his exercise tolerance. He denies any recent travel or known exposures to sick individuals. He has tried over-the-counter cough suppressants with minimal relief.
+*name* presents to the clinic with a one-week history of a dry, hacking cough and progressive shortness of breath. He reports the cough began insidiously, initially mild, but has worsened over the past three days. He denies fever, chills, or night sweats. He describes the shortness of breath as a feeling of tightness in his chest, exacerbated by exertion. He has noticed a decrease in his exercise tolerance. He denies any recent travel or known exposures to sick individuals. He has tried over-the-counter cough suppressants with minimal relief.
 
 Past Medical History (PMH):
 
@@ -127,3 +127,4 @@ Patient responded well to nebulized albuterol in clinic. Patient was given clear
 11/02/2023 (Follow-up):
 
 Patient reports significant improvement in cough and shortness of breath. Reports using inhaler as instructed. Examination shows improved breath sounds, minimal wheezing. Continue current medication regimen. Re-evaluate in 1 month.
+
