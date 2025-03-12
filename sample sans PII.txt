@@ -8,9 +8,9 @@ Date of Visit: 10/26/2023
 
 Address: *address*
 
-Phone: 231-774-1234
+Phone: *phone*
 
-email: jmichael@att.com
+email: *email*
 
 Provider: Dr. Eleanor Vance, MD
 

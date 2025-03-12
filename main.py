@@ -2,6 +2,8 @@ import sys
 
 from numpy import full
 from Regexs.address import *
+from Regexs.email import *
+from Regexs.phone import *
 
 import re
 
@@ -58,10 +60,10 @@ def main():
         pass
 
     if re.search("phone", Pii, re.IGNORECASE) is not None or Pii == "all":
-        pass
+        fullText = remove_phone_numbers(fullText)
 
     if re.search("e.mail", Pii, re.IGNORECASE) is not None or Pii == "all":
-        pass
+        fullText = remove_email_addresses(fullText)
 
     # Additional PII types can be added in the same manner
 
