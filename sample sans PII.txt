@@ -1,4 +1,4 @@
-Patient: *name*
+Patient: *name* *name*
 
 Date of Birth: *dob*
 
@@ -12,7 +12,7 @@ Phone: *phone*
 
 email: *email*
 
-Provider: Dr. Eleanor Vance, MD
+Provider: *name* *name*, MD
 
 Chief Complaint: "Persistent cough and shortness of breath for the past week."
 
