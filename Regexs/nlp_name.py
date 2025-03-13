@@ -73,7 +73,12 @@ def predict_name(model, text):
 
             outputs = model(input_ids, attention_mask)
             predictions = (outputs > 0.5).float()
-            prediction.extend(predictions.squeeze().tolist())
+            predictions = predictions.squeeze()
+
+            predictions_list = predictions.tolist()
+            predictions_list = predictions_list if isinstance(predictions_list, list) else [predictions_list]
+
+            prediction.extend(predictions_list)
     
     return prediction
 

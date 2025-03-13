@@ -23,10 +23,17 @@ def processPII():
     data = request.json
 
     fullText = data["text"]
-    fullText = RemovePII(fullText)
+    re_name = data["FilterName"]
+    re_address = data["FilterAddress"]
+    re_dob = data["FilterDOB"]
+    re_ssn = data["FilterSSN"]
+    re_phone = data["FilterPhone"]
+    re_email = data["FilterEmail"]
+
+    processedText = RemovePII(fullText, re_name, re_address, re_dob, re_ssn, re_phone, re_email)
 
     response = {
-        "text": fullText
+        "text": processedText
     }
     return response
 
