@@ -1,0 +1,19 @@
+textarea 
+{
+    height: 7in;
+    width: 5in;
+}
+
+.inputContainer
+{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.typeToggler
+{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}

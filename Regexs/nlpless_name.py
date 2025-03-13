@@ -19,7 +19,6 @@ def FindNames(fullText: str) -> str:
             if len(result) > 2:
                 foundNames.append(f"{result[0]} {result[2][:-1]}")
 
-    print(foundNames)
     for name in foundNames:
         fullText = fullText.replace(name, tag)
 
