@@ -2,11 +2,12 @@ import sys
 import re
 
 from Regexs.address import *
-from Regexs.email import *
+from Regexs.email_re import *
 from Regexs.phone import *
 from Regexs.dob import *
 from Regexs.ssn import *
 from Regexs.nlpless_name import *
+from Regexs.nlp_name import *
 
 def main():
     if len(sys.argv) < 2:
@@ -49,7 +50,7 @@ def main():
 
     # Going through the PII types
     if re.search("name", Pii, re.IGNORECASE) is not None or Pii == "all":
-        fullText = FindNames(fullText)
+        fullText = remove_names(fullText)
 
     if re.search("address", Pii, re.IGNORECASE) is not None or Pii == "all":
         fullText = FindAddresses(fullText)
