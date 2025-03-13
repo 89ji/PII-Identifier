@@ -2,7 +2,6 @@ import sys
 from remover import RemovePII
 from web import StartWebserver
 
-
 def main():
     if len(sys.argv) < 2:
         print('''
@@ -54,6 +53,7 @@ Usage:
 
 
     fullText = RemovePII(fullText, Pii)
+
 
     # Writing the target file
     with open(destFile, "w") as dest:
