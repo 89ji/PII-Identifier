@@ -10,4 +10,5 @@ def FindAddresses(fullText :str) -> str:
     streets = f"({streets[1::]})"
 
     pattern = "\d{1,6}.{1,20}" + streets + "(,? ((Apt|Unit).{1,20} [A-Z][A-Z] )?\d{5})?"
+
     return re.sub(pattern, tag, fullText)

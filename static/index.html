@@ -65,6 +65,11 @@
       <input type="checkbox" />
     </div>
 
+    <div class="typeToggler">
+      <label>Provider Name</label>
+      <input type="checkbox" />
+    </div>
+
     <button onclick="sendPII()">Send</button>
   </body>
 </html>
@@ -78,6 +83,7 @@
     ssn_checkbox = document.getElementsByTagName("input")[3].checked;
     phone_checkbox = document.getElementsByTagName("input")[4].checked;
     email_checkbox = document.getElementsByTagName("input")[5].checked;
+    provider_checkbox = document.getElementsByTagName("input")[6].checked;
 
     data = {
       text: input,
@@ -87,6 +93,7 @@
       FilterSSN: ssn_checkbox,
       FilterPhone: phone_checkbox,
       FilterEmail: email_checkbox,
+      FilterProvider: provider_checkbox,
     };
 
     response = await fetch(window.location.href + "PII", {
