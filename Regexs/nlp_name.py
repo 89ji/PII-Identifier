@@ -82,7 +82,7 @@ def predict_name(model, text):
     
     return prediction
 
-def remove_names(text, tag_names=True, tag_providers=True):
+def remove_names(text, tag_names=True, tag_providers=True, tag_social_workers=True):
     text_copy = str(text)
     processed_text = preprocess_text(text_copy)
     no_punctuation_text = [re.sub(r"[,\.]", "", token) for token in processed_text]
@@ -102,21 +102,30 @@ def remove_names(text, tag_names=True, tag_providers=True):
         context_text = " ".join(context_window)
         
         provider_pattern = re.compile(r"\b(Dr|MD|PhD|DDS|DVM|DO|PA|NP|RN|LPN|CNA)\b")
+        social_worker_pattern = re.compile(r"\b(SW|Social Worker|LCSW|MSW)\b", re.IGNORECASE)
+        
         if tag_providers and provider_pattern.search(context_text):
             text = text.replace(name, "*provider_name*")
-        elif tag_names and not provider_pattern.search(context_text):
+        elif tag_social_workers and social_worker_pattern.search(context_text):
+            text = text.replace(name, "*social_worker*")
+        elif tag_names and not provider_pattern.search(context_text) and not social_worker_pattern.search(context_text):
             text = text.replace(name, "*name*")
     
     if tag_names:
         text = re.sub(r"(\*\bname\*) (\*name\b\*)", "*name*", text)
     if tag_providers:
         text = re.sub(r"(\*\bprovider_name\*) (\*provider_name\b\*)", "*provider_name*", text)
+    if tag_social_workers:
+        text = re.sub(r"(\*\bsocial_worker\*) (\*social_worker\b\*)", "*social_worker*", text)
     
+    if tag_social_workers:
+        text = re.sub(r"\b(Mr|Mrs|Miss|Ms)\.?\s+\*social_worker\*", "*social_worker*", text, flags=re.IGNORECASE)
+
     if tag_providers:
-        text = re.sub(r"\b(Dr|MD|PhD|DDS|DVM|DO|PA|NP|RN|LPN|CNA)\b.*?\b(Dr|MD|PhD|DDS|DVM|DO|PA|NP|RN|LPN|CNA)\b", "*provider_name*", text)
+        text = re.sub(r"\b(Dr|MD|PhD|DDS|DVM|DO|PA|NP|RN|LPN|CNA)\b.*?\b(Dr|MD|PhD|DDS|DVM|DO|PA|NP|RN|LPN|CNA)\b", "*provider_name*", text, flags=re.IGNORECASE)
     
     if tag_names:
-        text = re.sub(r"((Mr|Mrs|Miss|Ms)\.) (([A-Z][a-z]* ?)*)" , "", text)
+        text = re.sub(r"\b(Mr|Mrs|Miss|Ms)\.?\s+\*name\*" , "*name*", text, flags=re.IGNORECASE)
 
     return text
 
