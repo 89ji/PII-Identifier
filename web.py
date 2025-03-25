@@ -29,8 +29,9 @@ def processPII():
     re_ssn = data["FilterSSN"]
     re_phone = data["FilterPhone"]
     re_email = data["FilterEmail"]
+    re_provider = data["FilterProvider"]
 
-    processedText = RemovePII(fullText, re_name, re_address, re_dob, re_ssn, re_phone, re_email)
+    processedText = RemovePII(fullText, re_name, re_address, re_dob, re_ssn, re_phone, re_email, re_provider)
 
     response = {
         "text": processedText

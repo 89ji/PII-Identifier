@@ -7,10 +7,10 @@ from Regexs.ssn import *
 from Regexs.nlpless_name import *
 from Regexs.nlp_name import *
 
-def RemovePII(fullText :str, re_name :bool = True, re_address :bool = True, re_dob :bool = True, re_ssn :bool = True, re_phone :bool = True, re_email :bool = True) -> str:
+def RemovePII(fullText :str, re_name :bool = True, re_address :bool = True, re_dob :bool = True, re_ssn :bool = True, re_phone :bool = True, re_email :bool = True, re_provider :bool = True) -> str:
     # Going through the PII types
-    if re_name:
-        fullText = remove_names(fullText)
+    if re_name or re_provider:
+        fullText = remove_names(fullText, re_name, re_provider)
 
     if re_address:
         fullText = FindAddresses(fullText)
