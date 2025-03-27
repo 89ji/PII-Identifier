@@ -3,8 +3,11 @@ import webbrowser
 from remover import RemovePII
 import sys
 
+
 def StartWebserver():
-    webbrowser.open("http://localhost:1986/", )
+    webbrowser.open(
+        "http://localhost:1986/",
+    )
     app = Bottle()
     run(host="localhost", port=1986)
     exit(0)
@@ -14,9 +17,11 @@ def StartWebserver():
 def landing():
     return static_file("index.html", "static")
 
+
 @route("/static/<filename:path>")
 def static(filename):
-    return static_file(filename, root='static')
+    return static_file(filename, root="static")
+
 
 @post("/PII")
 def processPII():
@@ -31,12 +36,28 @@ def processPII():
     re_email = data["FilterEmail"]
     re_provider = data["FilterProvider"]
     re_social_worker = data["FilterSocialWorker"]
+    re_hospital_name = data["FilterHospitalName"]
+    re_medicaid = data["FilterMedicaid"]
+    re_allergies = data["FilterAllergies"]
+    re_lab_results = data["FilterLabResults"]
 
-    processedText = RemovePII(fullText, re_name, re_address, re_dob, re_ssn, re_phone, re_email, re_provider, re_social_worker)
+    processedText = RemovePII(
+        fullText,
+        re_name,
+        re_address,
+        re_dob,
+        re_ssn,
+        re_phone,
+        re_email,
+        re_provider,
+        re_social_worker,
+        re_medicaid,
+        re_lab_results,
+        re_allergies,
+        re_hospital_name,
+    )
 
-    response = {
-        "text": processedText
-    }
+    response = {"text": processedText}
     return response
 
 
@@ -44,4 +65,3 @@ def processPII():
 def kill():
     print("Terminated via page closed")
     sys.stderr.close()
-    
