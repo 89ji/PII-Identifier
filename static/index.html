@@ -75,6 +75,11 @@
       <input type="checkbox" />
     </div>
 
+    <div class="typeToggler">
+      <label>Hospital Name</label>
+      <input type="checkbox" />
+    </div>
+
     <button onclick="sendPII()">Send</button>
   </body>
 </html>
@@ -90,6 +95,7 @@
     email_checkbox = document.getElementsByTagName("input")[5].checked;
     provider_checkbox = document.getElementsByTagName("input")[6].checked;
     social_worker_checkbox = document.getElementsByTagName("input")[7].checked;
+    hospital_checkbox = document.getElementsByTagName("input")[8].checked;
 
     data = {
       text: input,
@@ -101,6 +107,7 @@
       FilterEmail: email_checkbox,
       FilterProvider: provider_checkbox,
       FilterSocialWorker: social_worker_checkbox,
+      FilterHospital: hospital_checkbox
     };
 
     response = await fetch(window.location.href + "PII", {
