@@ -37,42 +37,62 @@
 
     <div class="typeToggler">
       <label>Names</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
     </div>
 
     <div class="typeToggler">
       <label>Address</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
     </div>
 
     <div class="typeToggler">
       <label>Date of Birth</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
     </div>
 
     <div class="typeToggler">
       <label>Social Security Number</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
     </div>
 
     <div class="typeToggler">
       <label>Phone Number</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
     </div>
 
     <div class="typeToggler">
       <label>Email</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
     </div>
 
     <div class="typeToggler">
       <label>Provider Name</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
     </div>
 
     <div class="typeToggler">
       <label>Social Worker Name</label>
-      <input type="checkbox" />
+      <input type="checkbox" checked/>
+    </div>
+
+    <div class="typeToggler">
+      <label>Hospital Name</label>
+      <input type="checkbox" checked/>
+    </div>
+
+    <div class="typeToggler">
+      <label>Medicaid IDs</label>
+      <input type="checkbox" checked/>
+    </div>
+
+    <div class="typeToggler">
+      <label>Allergies</label>
+      <input type="checkbox" checked/>
+    </div>
+
+    <div class="typeToggler">
+      <label>Lab Results</label>
+      <input type="checkbox" checked/>
     </div>
 
     <button onclick="sendPII()">Send</button>
@@ -90,6 +110,10 @@
     email_checkbox = document.getElementsByTagName("input")[5].checked;
     provider_checkbox = document.getElementsByTagName("input")[6].checked;
     social_worker_checkbox = document.getElementsByTagName("input")[7].checked;
+    hospital_checkbox = document.getElementsByTagName("input")[8].checked;
+    medicaid_checkbox = document.getElementsByTagName("input")[9].checked;
+    allergies_checkbox = document.getElementsByTagName("input")[10].checked;
+    lab_checkbox = document.getElementsByTagName("input")[11].checked;
 
     data = {
       text: input,
@@ -101,6 +125,10 @@
       FilterEmail: email_checkbox,
       FilterProvider: provider_checkbox,
       FilterSocialWorker: social_worker_checkbox,
+      FilterHospitalName: hospital_checkbox,
+      FilterMedicaid: medicaid_checkbox,
+      FilterAllergies: allergies_checkbox,
+      FilterLabResults: lab_checkbox
     };
 
     response = await fetch(window.location.href + "PII", {

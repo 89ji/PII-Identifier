@@ -6,9 +6,24 @@ from Regexs.dob import *
 from Regexs.ssn import *
 from Regexs.nlpless_name import *
 from Regexs.nlp_name import *
+from Regexs.medicaid import *
 
-def RemovePII(fullText :str, re_name :bool = True, re_address :bool = True, re_dob :bool = True, re_ssn :bool = True, 
-              re_phone :bool = True, re_email :bool = True, re_provider :bool = True, re_social_worker :bool = True) -> str:
+
+def RemovePII(
+    fullText: str,
+    re_name: bool = True,
+    re_address: bool = True,
+    re_dob: bool = True,
+    re_ssn: bool = True,
+    re_phone: bool = True,
+    re_email: bool = True,
+    re_provider: bool = True,
+    re_social_worker: bool = True,
+    re_medicaid: bool = True,
+    re_lab_results: bool = True,
+    re_allergies: bool = True,
+    re_hospital: bool = True,
+) -> str:
     # Going through the PII types
     if re_name or re_provider or re_social_worker:
         fullText = remove_names(fullText, re_name, re_provider, re_social_worker)
@@ -27,6 +42,18 @@ def RemovePII(fullText :str, re_name :bool = True, re_address :bool = True, re_d
 
     if re_email:
         fullText = remove_email_addresses(fullText)
+
+    if re_medicaid:
+        fullText = FindMedicaid(fullText)
+
+    if re_lab_results:
+        pass
+
+    if re_allergies:
+        pass
+
+    if re_hospital:
+        pass
 
     # Additional PII types can be added in the same manner
 
