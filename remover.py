@@ -6,6 +6,7 @@ from Regexs.dob import *
 from Regexs.ssn import *
 from Regexs.nlpless_name import *
 from Regexs.nlp_name import *
+from Regexs.hospital import *
 from Regexs.medicaid import *
 
 
@@ -53,7 +54,7 @@ def RemovePII(
         pass
 
     if re_hospital:
-        pass
+        fullText = FindHospitals(fullText)
 
     # Additional PII types can be added in the same manner
 
