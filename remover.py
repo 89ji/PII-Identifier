@@ -7,6 +7,7 @@ from Regexs.ssn import *
 from Regexs.nlpless_name import *
 from Regexs.nlp_name import *
 from Regexs.hospital import *
+from Regexs.lab_results import *
 from Regexs.medicaid import *
 
 
@@ -48,7 +49,7 @@ def RemovePII(
         fullText = FindMedicaid(fullText)
 
     if re_lab_results:
-        pass
+        fullText = removeLabResults(fullText)
 
     if re_allergies:
         pass
