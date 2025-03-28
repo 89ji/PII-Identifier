@@ -6,7 +6,7 @@ def removeDOB(text):
 
     for x in lines:
         # the find regex patterns
-        dobPhrases = [r"\bdate[\s\-_]*of[\s\-_]*birth\b", r"D[\s\-_]O[\s\-_]B", r"birth[\s\-_]*date", r"birth[\s\-_]*day", r"born[\s:]"]
+        dobPhrases = [r"\bdate[\s\-_]*of[\s\-_]*birth\b", r"D[\s\-_]?O[\s\-_]?B", r"birth[\s\-_]*date", r"birth[\s\-_]*day", r"born[\s:]"]
         datePhrases = [r"\b\d{4}[\s\-/]*\d{1,2}[\s\-/]*\d{1,2}\b", r"\b\d{1,2}[/\-]\d{1,2}[/\-]\d{4}\b"]
 
         # DOB section
