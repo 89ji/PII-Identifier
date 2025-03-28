@@ -1,22 +1,26 @@
 import re
 
-# detect "Allergies:"
-# check each line after for leading "-" and replace with *allergy*
-# if no leading "-" then return
+def allergies(text):
+    lines = text.split("\n")
+    new_text = []
+    inside_allergies_section = False  # tracks if we are in the section
+    allergiesPhrases = [r"\ballergies?\b", r"\ballergy?\b"]
 
-def allergies(lines):
-    sleeperAgent = False
-    allergiesLines = []
-    
     for line in lines:
-        if re.search(r"\bAllergies:\b", line):
-            sleeperAgent = True
-        elif sleeperAgent and line.startswith("-"):
-            line = "*allergy*"
-        else:
-            sleepAgent = False
-            
-        allergiesLines.append(line)
-        
-    return allergiesLines
-    
+
+        # ignore bulleted sections please
+        if inside_allergies_section and not re.match(r"^\s*[-•]", line):
+            inside_allergies_section = False  # Stop ignoring text
+
+        # Detect allergies section
+        for y in allergiesPhrases:
+            if re.search(y, line, re.IGNORECASE):
+                inside_allergies_section = True  
+                new_text.append("*allergies*")  # redact added
+                break # skip the line
+                
+        # append only lines not inside the allergies section
+        if not inside_allergies_section:
+            new_text.append(line)
+
+    return "\n".join(new_text)

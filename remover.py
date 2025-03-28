@@ -9,6 +9,7 @@ from Regexs.nlp_name import *
 from Regexs.hospital import *
 from Regexs.lab_results import *
 from Regexs.medicaid import *
+from Regexs.allergies import *
 
 
 def RemovePII(
@@ -52,7 +53,7 @@ def RemovePII(
         fullText = removeLabResults(fullText)
 
     if re_allergies:
-        pass
+        fullText = allergies(fullText)
 
     if re_hospital:
         fullText = FindHospitals(fullText)
