@@ -1,1 +1,6 @@
+torch
+transformers
+setuptools
+wheel
 spacy
+bottle

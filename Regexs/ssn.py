@@ -6,7 +6,7 @@ def removeSSN(text):
 
     for x in lines:
         # the find regex patterns 
-        ssnPhrases = [r"\d{3}[\s\-_]?\d{2}[\s\-_]?\d{4}"]
+        ssnPhrases = [r"(\d|\*){3}[\s\-_]?(\d|\*){2}[\s\-_]?(\d|\*){4}"]
         
         # SSN section
         for y in ssnPhrases:
