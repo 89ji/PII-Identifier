@@ -24,9 +24,3 @@ def removeLabResults(text):
             new_text.append(line)
 
     return "\n".join(new_text)
-
-
-with open("test.txt") as target:
-    text = target.read()
-with open("output.txt", "w") as new_file:
-    new_file.write(removeLabResults(text))
