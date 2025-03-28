@@ -9,14 +9,14 @@ def allergies(text):
     for line in lines:
 
         # ignore bulleted sections please
-        if inside_allergies_section and not re.match(r"^\s*[-•]", line):
+        if inside_allergies_section and not re.match(r"(^\s*$|^\s*[-•])", line):
             inside_allergies_section = False  # Stop ignoring text
 
         # Detect allergies section
         for y in allergiesPhrases:
             if re.search(y, line, re.IGNORECASE):
                 inside_allergies_section = True  
-                new_text.append("*allergies*")  # redact added
+                new_text.append("*allergies*\n")  # redact added
                 break # skip the line
                 
         # append only lines not inside the allergies section
