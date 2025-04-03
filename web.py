@@ -40,6 +40,9 @@ def processPII():
     re_medicaid = data["FilterMedicaid"]
     re_allergies = data["FilterAllergies"]
     re_lab_results = data["FilterLabResults"]
+    re_account = data["FilterAccount"]
+    re_certificate = data["FilterCertificate"]
+    re_serial = data["FilterSerial"]
 
     processedText = RemovePII(
         fullText,
@@ -55,6 +58,9 @@ def processPII():
         re_lab_results,
         re_allergies,
         re_hospital_name,
+        re_account,
+        re_certificate,
+        re_serial
     )
 
     response = {"text": processedText}
