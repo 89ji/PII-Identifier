@@ -2,6 +2,6 @@ torch
 transformers
 setuptools
 wheel
-spacy
 bottle
 sentencepiece
+spacy
