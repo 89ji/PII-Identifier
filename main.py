@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 from remover import RemovePII
 from web import StartWebserver
