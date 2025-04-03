@@ -1,18 +1,13 @@
 import re
 
 def removeSSN(text):
-    returnPhrase = ""
-    lines = text.split("\n")
+    ssn_tag = "*ssn*"
 
-    for x in lines:
-        # the find regex patterns 
-        ssnPhrases = [r"(\d|\*){3}[\s\-_]?(\d|\*){2}[\s\-_]?(\d|\*){4}"]
-        
-        # SSN section
-        for y in ssnPhrases:
-            x = re.sub(y, "*ssn*", x, flags=re.IGNORECASE)
+    ssn_finder = re.compile(r"(SSN|Social Security| Social Security Number):\s?((\d|\*){3}[\s\-_]?(\d|\*){2}[\s\-_]?(\d|\*){4})", re.IGNORECASE)
+    match = ssn_finder.search(text)
 
-        # store line, also any modifications
-        returnPhrase += x + "\n"
-
-    return returnPhrase
+    if match:
+        ssn_num = match.group(2).strip()
+        text = text.replace(ssn_num, ssn_tag)
+    
+    return text
