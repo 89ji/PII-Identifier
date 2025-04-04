@@ -47,6 +47,7 @@ def processPII():
     re_fax = data["FilterFax"]
     re_med_numbers = data["FilterMedicalNumbers"]
     re_beneficiaries = data["FilterBeneficiary"]
+    re_biometric = data["FilterBiometric"]
 
     processedText = RemovePII(
         fullText,
@@ -68,7 +69,8 @@ def processPII():
         re_serial,
         re_fax,
         re_med_numbers,
-        re_beneficiaries
+        re_beneficiaries,
+        re_biometric
     )
 
     response = {"text": processedText}
