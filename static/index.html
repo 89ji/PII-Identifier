@@ -115,6 +115,21 @@
       <input type="checkbox" checked />
     </div>
 
+    <div class="typeToggler">
+      <label>Fax Numbers</label>
+      <input type="checkbox" checked />
+    </div>
+
+    <div class="typeToggler">
+      <label>Medical Record Numbers</label>
+      <input type="checkbox" checked />
+    </div>
+
+    <div class="typeToggler">
+      <label>Health Plan Beneficiary Numbers</label>
+      <input type="checkbox" checked />
+    </div>
+
     <button onclick="sendPII()">Send</button>
   </body>
 </html>
@@ -138,6 +153,9 @@
     account_checkbox = document.getElementsByTagName("input")[12].checked;
     certificate_checkbox = document.getElementsByTagName("input")[13].checked;
     serial_checkbox = document.getElementsByTagName("input")[14].checked;
+    fax_checkbox = document.getElementsByTagName("input")[15].checked;
+    medical_checkbox = document.getElementsByTagName("input")[16].checked;
+    beneficiary_checkbox = document.getElementsByTagName("input")[17].checked;
 
     data = {
       text: input,
@@ -157,6 +175,9 @@
       FilterAccount: account_checkbox,
       FilterCertificate: certificate_checkbox,
       FilterSerial: serial_checkbox,
+      FilterFax: fax_checkbox,
+      FilterMedicalNumbers: medical_checkbox,
+      FilterBeneficiary: beneficiary_checkbox
     };
 
     response = await fetch(window.location.href + "PII", {

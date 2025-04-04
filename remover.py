@@ -1,8 +1,10 @@
 import re
 from Regexs.address import *
 from Regexs.email_re import *
+from Regexs.medicalRecordNumbers import *
 from Regexs.phone import *
 from Regexs.dob import *
+from Regexs.planBeneficiaryNumber import *
 from Regexs.ssn import *
 from Regexs.nlpless_name import *
 from Regexs.nlp_name import *
@@ -13,7 +15,7 @@ from Regexs.allergies import *
 from Regexs.account import *
 from Regexs.certificate import *
 from Regexs.serial import *
-
+from Regexs.fax import *
 
 def RemovePII(
     fullText: str,
@@ -33,11 +35,13 @@ def RemovePII(
     re_account: bool = True,
     re_certificate: bool = True,
     re_serial: bool = True,
+    re_fax: bool = True,
+    re_med_rec_num: bool = True,
+    re_beneficiary_num: bool = True,
 ) -> str:
-    # Going through the PII types
-    if re_name or re_provider or re_social_worker:
-        fullText = remove_names(fullText, re_name, re_provider, re_social_worker)
-        print("Name removed")
+    if re_fax:
+        fullText = FindFax(fullText)
+        print("Faxes removed")
 
     if re_address:
         fullText = FindAddresses(fullText)
@@ -86,6 +90,19 @@ def RemovePII(
     if re_serial:
         fullText = serial(fullText)
         print("Serial number removed")
+
+    if re_med_rec_num:
+        fullText = FindRecordNumbers(fullText)
+        print("Medical record numbers removed")
+
+    if re_beneficiary_num:
+        fullText = FindBeneficiary(fullText)
+        print("Beneficiary numbers removed")
+
+    # Going through the PII types
+    if re_name or re_provider or re_social_worker:
+        fullText = remove_names(fullText, re_name, re_provider, re_social_worker)
+        print("Name removed")
 
     # Additional PII types can be added in the same manner
 
