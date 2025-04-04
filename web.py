@@ -39,6 +39,7 @@ def processPII():
     re_hospital_name = data["FilterHospitalName"]
     re_medicaid = data["FilterMedicaid"]
     re_allergies = data["FilterAllergies"]
+    allergies_input = data["AllergiesInput"]
     re_lab_results = data["FilterLabResults"]
     re_account = data["FilterAccount"]
     re_certificate = data["FilterCertificate"]
@@ -57,6 +58,7 @@ def processPII():
         re_medicaid,
         re_lab_results,
         re_allergies,
+        allergies_input,
         re_hospital_name,
         re_account,
         re_certificate,

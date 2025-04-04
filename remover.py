@@ -28,6 +28,7 @@ def RemovePII(
     re_medicaid: bool = True,
     re_lab_results: bool = True,
     re_allergies: bool = True,
+    allergies_input: str = None,
     re_hospital: bool = True,
     re_account: bool = True,
     re_certificate: bool = True,
@@ -67,7 +68,7 @@ def RemovePII(
         print("Lab results removed")
 
     if re_allergies:
-        fullText = allergies(fullText)
+        fullText = allergies(fullText, allergies_input)
         print("Allergies removed")
 
     if re_hospital:
