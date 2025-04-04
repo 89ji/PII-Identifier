@@ -40,8 +40,8 @@ def RemovePII(
     re_fax: bool = True,
     re_med_rec_num: bool = True,
     re_beneficiary_num: bool = True,
-    re_uniqueID: bool = True,
     re_biometric: bool = True,
+    re_uniqueID: bool = True,
 ) -> str:
     if re_fax:
         fullText = FindFax(fullText)
@@ -115,6 +115,10 @@ def RemovePII(
     if re_biometric:
         fullText = bio_identifiers(fullText)
         print("Biometric removed")
+
+    if re_uniqueID:
+        fullText = removeUniqueID(fullText)
+        print("Medical record numbers removed")
 
     # Additional PII types can be added in the same manner
 
