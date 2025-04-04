@@ -37,62 +37,82 @@
 
     <div class="typeToggler">
       <label>Names</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Address</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Date of Birth</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Social Security Number</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Phone Number</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Email</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Provider Name</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Social Worker Name</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Hospital Name</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Medicaid IDs</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
     </div>
 
     <div class="typeToggler">
       <label>Allergies</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" unchecked />
+      <input
+        type="text"
+        id="allergies"
+        placeholder="List of allergies (comma separated)"
+      />
     </div>
 
     <div class="typeToggler">
       <label>Lab Results</label>
-      <input type="checkbox" checked/>
+      <input type="checkbox" checked />
+    </div>
+
+    <div class="typeToggler">
+      <label>Account Numbers</label>
+      <input type="checkbox" checked />
+    </div>
+
+    <div class="typeToggler">
+      <label>Certificate/License Numbers</label>
+      <input type="checkbox" checked />
+    </div>
+
+    <div class="typeToggler">
+      <label>Serial Numbers</label>
+      <input type="checkbox" checked />
     </div>
 
     <button onclick="sendPII()">Send</button>
@@ -113,7 +133,11 @@
     hospital_checkbox = document.getElementsByTagName("input")[8].checked;
     medicaid_checkbox = document.getElementsByTagName("input")[9].checked;
     allergies_checkbox = document.getElementsByTagName("input")[10].checked;
+    allergies_input = document.getElementById("allergies").value;
     lab_checkbox = document.getElementsByTagName("input")[11].checked;
+    account_checkbox = document.getElementsByTagName("input")[12].checked;
+    certificate_checkbox = document.getElementsByTagName("input")[13].checked;
+    serial_checkbox = document.getElementsByTagName("input")[14].checked;
 
     data = {
       text: input,
@@ -128,7 +152,11 @@
       FilterHospitalName: hospital_checkbox,
       FilterMedicaid: medicaid_checkbox,
       FilterAllergies: allergies_checkbox,
-      FilterLabResults: lab_checkbox
+      AllergiesInput: allergies_input,
+      FilterLabResults: lab_checkbox,
+      FilterAccount: account_checkbox,
+      FilterCertificate: certificate_checkbox,
+      FilterSerial: serial_checkbox,
     };
 
     response = await fetch(window.location.href + "PII", {

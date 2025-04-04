@@ -1,26 +1,24 @@
 import re
 
-def allergies(text):
+def allergies(text, allergies_input=None):
+    allergies_tag = "*allergies*"
+    if allergies_input is None:
+        return text
     lines = text.split("\n")
     new_text = []
-    inside_allergies_section = False  # tracks if we are in the section
-    allergiesPhrases = [r"\ballergies?\b", r"\ballergy?\b"]
+    allergiesPhrases = [allergy.strip() for allergy in allergies_input.split(",")]
+    allergiesPhrases = [phrase for phrase in allergiesPhrases if phrase]
+    allergies_pattern = str()
+
+    for phrase in allergiesPhrases:
+        if allergies_pattern:
+            allergies_pattern += "|"
+        allergies_pattern += re.escape(phrase)
 
     for line in lines:
-
-        # ignore bulleted sections please
-        if inside_allergies_section and not re.match(r"(^\s*$|^\s*[-•])", line):
-            inside_allergies_section = False  # Stop ignoring text
-
-        # Detect allergies section
-        for y in allergiesPhrases:
-            if re.search(y, line, re.IGNORECASE):
-                inside_allergies_section = True  
-                new_text.append("*allergies*\n")  # redact added
-                break # skip the line
-                
-        # append only lines not inside the allergies section
-        if not inside_allergies_section:
+        if re.search(allergies_pattern, line, re.IGNORECASE):
+            new_text.append(f"{allergies_tag}")
+        else:
             new_text.append(line)
 
     return "\n".join(new_text)

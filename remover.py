@@ -10,6 +10,9 @@ from Regexs.hospital import *
 from Regexs.lab_results import *
 from Regexs.medicaid import *
 from Regexs.allergies import *
+from Regexs.account import *
+from Regexs.certificate import *
+from Regexs.serial import *
 
 
 def RemovePII(
@@ -25,38 +28,64 @@ def RemovePII(
     re_medicaid: bool = True,
     re_lab_results: bool = True,
     re_allergies: bool = True,
+    allergies_input: str = None,
     re_hospital: bool = True,
+    re_account: bool = True,
+    re_certificate: bool = True,
+    re_serial: bool = True,
 ) -> str:
     # Going through the PII types
     if re_name or re_provider or re_social_worker:
         fullText = remove_names(fullText, re_name, re_provider, re_social_worker)
+        print("Name removed")
 
     if re_address:
         fullText = FindAddresses(fullText)
+        print("Address removed")
 
     if re_dob:
         fullText = removeDOB(fullText)
+        print("DOB removed")
 
     if re_ssn:
         fullText = removeSSN(fullText)
+        print("SSN removed")
 
     if re_phone:
         fullText = remove_phone_numbers(fullText)
+        print("Phone removed")
 
     if re_email:
         fullText = remove_email_addresses(fullText)
+        print("Email removed")
 
     if re_medicaid:
         fullText = FindMedicaid(fullText)
+        print("Medicaid removed")
 
     if re_lab_results:
         fullText = removeLabResults(fullText)
+        print("Lab results removed")
 
     if re_allergies:
-        fullText = allergies(fullText)
+        fullText = allergies(fullText, allergies_input)
+        print("Allergies removed")
 
     if re_hospital:
         fullText = FindHospitals(fullText)
+        print("Hospital name removed")
+
+    if re_account:
+        fullText = account(fullText)
+        print("Account removed")
+
+    if re_certificate:
+        fullText = certificate(fullText)
+        print("Certificate removed")
+
+    if re_serial:
+        fullText = serial(fullText)
+        print("Serial number removed")
 
     # Additional PII types can be added in the same manner
 
