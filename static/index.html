@@ -130,6 +130,11 @@
       <input type="checkbox" checked />
     </div>
 
+    <div class="typeToggler">
+      <label>Unique IDs and Codes</label>
+      <input type="checkbox" checked />
+    </div>
+
     <button onclick="sendPII()">Send</button>
   </body>
 </html>
@@ -156,6 +161,7 @@
     fax_checkbox = document.getElementsByTagName("input")[15].checked;
     medical_checkbox = document.getElementsByTagName("input")[16].checked;
     beneficiary_checkbox = document.getElementsByTagName("input")[17].checked;
+    uniqueID_checkbox = document.getElementsByTagName("input")[17].checked;
 
     data = {
       text: input,
@@ -177,7 +183,8 @@
       FilterSerial: serial_checkbox,
       FilterFax: fax_checkbox,
       FilterMedicalNumbers: medical_checkbox,
-      FilterBeneficiary: beneficiary_checkbox
+      FilterBeneficiary: beneficiary_checkbox,
+      FilterUniqueID: uniqueID_checkbox,
     };
 
     response = await fetch(window.location.href + "PII", {
