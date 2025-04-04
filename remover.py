@@ -111,7 +111,7 @@ def RemovePII(
 
     if re_uniqueID:
         fullText = removeUniqueID(fullText)
-        print("Beneficiary numbers removed")
+        print("Unique IDs removed")
 
     if re_device_identifiers:
         fullText = remove_device_identifiers(fullText)
@@ -123,7 +123,7 @@ def RemovePII(
 
     if re_ipaddress:
         fullText = remove_ipaddress(fullText)
-        print("IP addresses remove")
+        print("IP addresses removed")
     
 
     # Going through the PII types
