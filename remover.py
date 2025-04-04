@@ -123,7 +123,7 @@ def RemovePII(
 
     if re_ipaddress:
         fullText = remove_ipaddress(fullText)
-        print("IP addresses remove")
+        print("IP addresses removed")
     
 
     # Going through the PII types
@@ -134,10 +134,6 @@ def RemovePII(
     if re_biometric:
         fullText = bio_identifiers(fullText)
         print("Biometric removed")
-
-    if re_ipaddress:
-        fullText = remove_ipaddress(fullText)
-        print("IP address removed")
 
     # Additional PII types can be added in the same manner
 
