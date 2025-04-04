@@ -49,6 +49,9 @@ def processPII():
     re_beneficiaries = data["FilterBeneficiary"]
     re_biometric = data["FilterBiometric"]
     re_uniqueID = data["FilterUniqueID"]
+    re_device_identifiers = data["FilterDevice"]
+    re_url = data["FilterURL"]
+    re_ipaddress = data["FilterIP"]
 
     processedText = RemovePII(
         fullText,
@@ -73,6 +76,9 @@ def processPII():
         re_beneficiaries,
         re_biometric,
         re_uniqueID,
+        re_device_identifiers,
+        re_url,
+        re_ipaddress
     )
 
     response = {"text": processedText}

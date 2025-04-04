@@ -140,6 +140,21 @@
       <input type="checkbox" checked />
     </div>
 
+    <div class="typeToggler">
+      <label>URLs</label>
+      <input type="checkbox" checked />
+    </div>
+
+    <div class="typeToggler">
+      <label>Device Identifiers</label>
+      <input type="checkbox" checked />
+    </div>
+
+    <div class="typeToggler">
+      <label>IP Addresses</label>
+      <input type="checkbox" checked />
+    </div>
+
     <button onclick="sendPII()">Send</button>
   </body>
 </html>
@@ -168,6 +183,9 @@
     beneficiary_checkbox = document.getElementsByTagName("input")[17].checked;
     biometric_checkbox = document.getElementsByTagName("input")[18].checked;
     unique_checkbox = document.getElementsByTagName("input")[19].checked;
+    url_checkbox = document.getElementsByTagName("input")[20].checked;
+    device_checkbox = document.getElementsByTagName("input")[21].checked;
+    ip_checkbox = document.getElementsByTagName("input")[22].checked;
 
     data = {
       text: input,
@@ -192,6 +210,9 @@
       FilterBeneficiary: beneficiary_checkbox,
       FilterBiometric: biometric_checkbox,
       FilterUniqueID: unique_checkbox,
+      FilterURL: url_checkbox,
+      FilterDevice: device_checkbox,
+      FilterIP: ip_checkbox,
     };
 
     response = await fetch(window.location.href + "PII", {

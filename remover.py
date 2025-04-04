@@ -20,6 +20,7 @@ from Regexs.uniqueID import *
 from Regexs.biometric import *
 from Regexs.deviceidentifiers import * 
 from Regexs.url import *
+from Regexs.ipaddress import *
 
 def RemovePII(
     fullText: str,
@@ -46,6 +47,7 @@ def RemovePII(
     re_uniqueID: bool = True,
     re_device_identifiers: bool = True,
     re_url: bool = True,
+    re_ipaddress: bool = True,
 ) -> str:
     if re_fax:
         fullText = FindFax(fullText)
@@ -128,6 +130,10 @@ def RemovePII(
     if re_biometric:
         fullText = bio_identifiers(fullText)
         print("Biometric removed")
+
+    if re_ipaddress:
+        fullText = remove_ipaddress(fullText)
+        print("IP address removed")
 
     # Additional PII types can be added in the same manner
 
