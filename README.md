@@ -5,4 +5,6 @@ Installation:
   1. Create a python virtual environment and activate it. Make sure it doesn't get included in your git commits. Or else...
   2. Install the items in requirements.txt
   3. Download /ML_Approach/name_classifier.pth from the repo. The file gets munted when downloaded via git for some reason.
-  4. Run python3 -m spacy download en_core_web_trf
+  4. Run python -m spacy download en_core_web_trf
+
+Make sure you use python 3.12 and not 3.13.

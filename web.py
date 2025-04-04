@@ -44,6 +44,9 @@ def processPII():
     re_account = data["FilterAccount"]
     re_certificate = data["FilterCertificate"]
     re_serial = data["FilterSerial"]
+    re_fax = data["FilterFax"]
+    re_med_numbers = data["FilterMedicalNumbers"]
+    re_beneficiaries = data["FilterBeneficiary"]
 
     processedText = RemovePII(
         fullText,
@@ -62,7 +65,10 @@ def processPII():
         re_hospital_name,
         re_account,
         re_certificate,
-        re_serial
+        re_serial,
+        re_fax,
+        re_med_numbers,
+        re_beneficiaries
     )
 
     response = {"text": processedText}
