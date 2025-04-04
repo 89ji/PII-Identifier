@@ -16,6 +16,7 @@ from Regexs.account import *
 from Regexs.certificate import *
 from Regexs.serial import *
 from Regexs.fax import *
+from Regexs.uniqueID import *
 from Regexs.biometric import *
 
 def RemovePII(
@@ -39,6 +40,7 @@ def RemovePII(
     re_fax: bool = True,
     re_med_rec_num: bool = True,
     re_beneficiary_num: bool = True,
+    re_uniqueID: bool = True,
     re_biometric: bool = True,
 ) -> str:
     if re_fax:
@@ -99,6 +101,10 @@ def RemovePII(
 
     if re_beneficiary_num:
         fullText = FindBeneficiary(fullText)
+        print("Beneficiary numbers removed")
+
+    if re_uniqueID:
+        fullText = removeUniqueID(fullText)
         print("Beneficiary numbers removed")
 
     # Going through the PII types
