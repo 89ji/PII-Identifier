@@ -105,7 +105,7 @@ def RemovePII(
 
     if re_uniqueID:
         fullText = removeUniqueID(fullText)
-        print("Beneficiary numbers removed")
+        print("Unique IDs removed")
 
     # Going through the PII types
     if re_name or re_provider or re_social_worker:
@@ -115,10 +115,6 @@ def RemovePII(
     if re_biometric:
         fullText = bio_identifiers(fullText)
         print("Biometric removed")
-
-    if re_uniqueID:
-        fullText = removeUniqueID(fullText)
-        print("Medical record numbers removed")
 
     # Additional PII types can be added in the same manner
 
