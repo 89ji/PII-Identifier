@@ -120,6 +120,10 @@ def RemovePII(
     if re_url:
         fullText = remove_urls(fullText)
         print("Urls removed")
+
+    if re_ipaddress:
+        fullText = remove_ipaddress(fullText)
+        print("IP addresses remove")
     
 
     # Going through the PII types
