@@ -41,8 +41,8 @@ def RemovePII(
     re_fax: bool = True,
     re_med_rec_num: bool = True,
     re_beneficiary_num: bool = True,
-    re_uniqueID: bool = True,
     re_biometric: bool = True,
+    re_uniqueID: bool = True,
     re_device_identifiers: bool = True,
 ) -> str:
     if re_fax:
