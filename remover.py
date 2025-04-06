@@ -1,26 +1,22 @@
 import re
 from Regexs.address import *
 from Regexs.email_re import *
-from Regexs.medicalRecordNumbers import *
 from Regexs.phone import *
 from Regexs.dob import *
-from Regexs.planBeneficiaryNumber import *
 from Regexs.ssn import *
 from Regexs.nlpless_name import *
 from Regexs.nlp_name import *
-from Regexs.hospital import *
 from Regexs.lab_results import *
-from Regexs.medicaid import *
 from Regexs.allergies import *
 from Regexs.account import *
 from Regexs.certificate import *
-from Regexs.serial import *
-from Regexs.fax import *
 from Regexs.uniqueID import *
 from Regexs.biometric import *
-from Regexs.deviceidentifiers import * 
+from Regexs.deviceidentifiers import *
 from Regexs.url import *
 from Regexs.ipaddress import *
+from Regexs.labels import LabelwiseRemove
+
 
 def RemovePII(
     fullText: str,
@@ -50,7 +46,9 @@ def RemovePII(
     re_ipaddress: bool = True,
 ) -> str:
     if re_fax:
-        fullText = FindFax(fullText)
+        fullText, removed = LabelwiseRemove(
+            "*fax number*", fullText, r"(fax number|fax no\.?)"
+        )
         print("Faxes removed")
 
     if re_address:
@@ -74,7 +72,12 @@ def RemovePII(
         print("Email removed")
 
     if re_medicaid:
-        fullText = FindMedicaid(fullText)
+        fullText, removed = LabelwiseRemove(
+            "*medicaid id*",
+            fullText,
+            r"medicaid",
+            r"(\d{4} \d{4} \d{4} \d{4}|\d{4}-\d{4}-\d{4}-\d{4})",
+        )
         print("Medicaid removed")
 
     if re_lab_results:
@@ -86,7 +89,7 @@ def RemovePII(
         print("Allergies removed")
 
     if re_hospital:
-        fullText = FindHospitals(fullText)
+        fullText, removed = LabelwiseRemove("*hospital*", fullText, r"hospital")
         print("Hospital name removed")
 
     if re_account:
@@ -98,15 +101,21 @@ def RemovePII(
         print("Certificate removed")
 
     if re_serial:
-        fullText = serial(fullText)
+        fullText, removed = LabelwiseRemove("*serial number*", fullText, r"serial")
         print("Serial number removed")
 
     if re_med_rec_num:
-        fullText = FindRecordNumbers(fullText)
+        fullText, removed = LabelwiseRemove(
+            "*medical record number*", fullText, r"medical record number"
+        )
         print("Medical record numbers removed")
 
     if re_beneficiary_num:
-        fullText = FindBeneficiary(fullText)
+        fullText, removed = LabelwiseRemove(
+            "*health plan beneficiary number*",
+            fullText,
+            r"health plan beneficiary number",
+        )
         print("Beneficiary numbers removed")
 
     if re_uniqueID:
@@ -116,7 +125,7 @@ def RemovePII(
     if re_device_identifiers:
         fullText = remove_device_identifiers(fullText)
         print("Device identifiers removed")
-        
+
     if re_url:
         fullText = remove_urls(fullText)
         print("Urls removed")
@@ -124,7 +133,6 @@ def RemovePII(
     if re_ipaddress:
         fullText = remove_ipaddress(fullText)
         print("IP addresses removed")
-    
 
     # Going through the PII types
     if re_name or re_provider or re_social_worker:
