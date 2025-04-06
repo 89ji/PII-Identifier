@@ -1,235 +1,125 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>PII Deidentifier</title>
-    <meta name="A simple frontend for our PII deidentifier" content="" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/sakura.css/css/sakura.css"
-      type="text/css"
-    />
-    <link rel="stylesheet" href="/static/style.css" type="text/css" />
-  </head>
-  <body>
-    <h1>DHIS Project - Group 3</h1>
-    <br />
 
-    <div class="inputContainer">
-      <div>
-        <label>Input Text</label>
-        <textarea
-          id="inputText"
-          placeholder="Paste medical info here"
-        ></textarea>
-      </div>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>PII Deidentifier</title>
+	<meta name="A simple frontend for our PII deidentifier" content="" />
+	<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css" />
+	<link rel="stylesheet" href="/static/style.css" type="text/css" />
+</head>
 
-      <div>
-        <label>Output Text</label>
-        <textarea
-          id="outputText"
-          placeholder="Deidentified medical info will show up here"
-          readonly="true"
-        ></textarea>
-      </div>
-    </div>
+<body>
+	<h1>DHIS Project - Group 3</h1>
+	<br />
 
-    <div class="typeToggler">
-      <label>Names</label>
-      <input type="checkbox" checked />
-    </div>
+	<div class="inputContainer">
+		<div>
+			<label>Input Text</label>
+			<textarea id="inputText" placeholder="Paste medical info here"></textarea>
+		</div>
 
-    <div class="typeToggler">
-      <label>Address</label>
-      <input type="checkbox" checked />
-    </div>
+		<div>
+			<label>Output Text</label>
+			<textarea id="outputText" placeholder="Deidentified medical info will show up here"
+				readonly="true"></textarea>
+		</div>
+	</div>
 
-    <div class="typeToggler">
-      <label>Date of Birth</label>
-      <input type="checkbox" checked />
-    </div>
+	<label>Removable PHIs</label>
+	<div id="buttonHolder">
+		<div class="buttonColumn">
+			<div class="typeToggler" id="template">
+				<input type="checkbox" checked />
+				<label>Template toggler lol</label>
+			</div>
+		</div>
+	</div>
 
-    <div class="typeToggler">
-      <label>Social Security Number</label>
-      <input type="checkbox" checked />
-    </div>
+	<div class="typeToggler">
+		<label>Allergies</label>
+		<input id="allergiesBox" type="checkbox" unchecked />
+		<input id="allergiesText" type="text" placeholder="List of allergies (comma separated)" />
+	</div>
 
-    <div class="typeToggler">
-      <label>Phone Number</label>
-      <input type="checkbox" checked />
-    </div>
 
-    <div class="typeToggler">
-      <label>Email</label>
-      <input type="checkbox" checked />
-    </div>
+	<button onclick="sendPII()">Send</button>
+</body>
 
-    <div class="typeToggler">
-      <label>Provider Name</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Social Worker Name</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Hospital Name</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Medicaid IDs</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Allergies</label>
-      <input type="checkbox" unchecked />
-      <input
-        type="text"
-        id="allergies"
-        placeholder="List of allergies (comma separated)"
-      />
-    </div>
-
-    <div class="typeToggler">
-      <label>Lab Results</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Account Numbers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Certificate/License Numbers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Serial Numbers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Fax Numbers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Medical Record Numbers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Health Plan Beneficiary Numbers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Biometric Identifiers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Unique IDs</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>URLs</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>Device Identifiers</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <div class="typeToggler">
-      <label>IP Addresses</label>
-      <input type="checkbox" checked />
-    </div>
-
-    <button onclick="sendPII()">Send</button>
-  </body>
 </html>
 
 <script>
-  async function sendPII() {
-    input = document.getElementById("inputText").value;
-    name_checkbox = document.getElementsByTagName("input")[0].checked;
-    address_checkbox = document.getElementsByTagName("input")[1].checked;
-    dob_checkbox = document.getElementsByTagName("input")[2].checked;
-    ssn_checkbox = document.getElementsByTagName("input")[3].checked;
-    phone_checkbox = document.getElementsByTagName("input")[4].checked;
-    email_checkbox = document.getElementsByTagName("input")[5].checked;
-    provider_checkbox = document.getElementsByTagName("input")[6].checked;
-    social_worker_checkbox = document.getElementsByTagName("input")[7].checked;
-    hospital_checkbox = document.getElementsByTagName("input")[8].checked;
-    medicaid_checkbox = document.getElementsByTagName("input")[9].checked;
-    allergies_checkbox = document.getElementsByTagName("input")[10].checked;
-    allergies_input = document.getElementById("allergies").value;
-    lab_checkbox = document.getElementsByTagName("input")[11].checked;
-    account_checkbox = document.getElementsByTagName("input")[12].checked;
-    certificate_checkbox = document.getElementsByTagName("input")[13].checked;
-    serial_checkbox = document.getElementsByTagName("input")[14].checked;
-    fax_checkbox = document.getElementsByTagName("input")[15].checked;
-    medical_checkbox = document.getElementsByTagName("input")[16].checked;
-    beneficiary_checkbox = document.getElementsByTagName("input")[17].checked;
-    biometric_checkbox = document.getElementsByTagName("input")[18].checked;
-    unique_checkbox = document.getElementsByTagName("input")[19].checked;
-    url_checkbox = document.getElementsByTagName("input")[20].checked;
-    device_checkbox = document.getElementsByTagName("input")[21].checked;
-    ip_checkbox = document.getElementsByTagName("input")[22].checked;
+	async function sendPII() {
+		phiToRemove = "";
 
-    data = {
-      text: input,
-      FilterName: name_checkbox,
-      FilterAddress: address_checkbox,
-      FilterDOB: dob_checkbox,
-      FilterSSN: ssn_checkbox,
-      FilterPhone: phone_checkbox,
-      FilterEmail: email_checkbox,
-      FilterProvider: provider_checkbox,
-      FilterSocialWorker: social_worker_checkbox,
-      FilterHospitalName: hospital_checkbox,
-      FilterMedicaid: medicaid_checkbox,
-      FilterAllergies: allergies_checkbox,
-      AllergiesInput: allergies_input,
-      FilterLabResults: lab_checkbox,
-      FilterAccount: account_checkbox,
-      FilterCertificate: certificate_checkbox,
-      FilterSerial: serial_checkbox,
-      FilterFax: fax_checkbox,
-      FilterMedicalNumbers: medical_checkbox,
-      FilterBeneficiary: beneficiary_checkbox,
-      FilterBiometric: biometric_checkbox,
-      FilterUniqueID: unique_checkbox,
-      FilterURL: url_checkbox,
-      FilterDevice: device_checkbox,
-      FilterIP: ip_checkbox,
-    };
+		for (const phi of phiList) {
+			if (document.getElementById(phi).childNodes[1].checked) phiToRemove = phiToRemove.concat(phi, "\n");
+		}
 
-    response = await fetch(window.location.href + "PII", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    text = await response.json();
+		allergiesList = ""
+		if (document.getElementById("allergiesBox").checked) {
+			phiToRemove = phiToRemove.concat("allergies", "\n");
+			allergiesList = document.getElementById("allergiesText").value;
+		}
 
-    document.getElementById("outputText").value = text["text"];
-  }
+		data = {
+			text: document.getElementById("inputText").value,
+			phis: phiToRemove,
+			AllergiesInput: allergiesList,
+		};
+		
 
-  window.addEventListener("beforeunload", function (event) {
-    var req = new XMLHttpRequest();
-    req.open("POST", window.location.href + "kill");
-    req.send();
-  });
+		response = await fetch(window.location.href + "PII", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+		text = await response.json();
+
+		document.getElementById("outputText").value = text["text"];
+	}
+
+	phiList = "";
+	const columns = 2;
+	window.addEventListener("load", async function (event) {
+		response = await fetch(window.location.href + "init", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		text = await response.json();
+		phiList = text.text;
+
+		const template = document.getElementById("template");
+		column = template.parentNode;
+		holder = column.parentNode;
+		template.remove();
+
+		columnList = [column];
+		for (let i=0; i<columns-1; i++) {
+			clone = column.cloneNode();
+			holder.append(clone);
+			columnList.push(clone);
+		}
+
+		columnPtr = 0;
+		for (let i = 0; i < phiList.length; i++) {
+			clone = template.cloneNode(true);
+			clone.id = phiList[i]
+			clone.childNodes[3].innerHTML = phiList[i]
+			columnList[columnPtr].append(clone);
+			columnPtr++;
+			if (columnPtr >= columnList.length) columnPtr = 0;
+		}
+	});
+
+	window.addEventListener("beforeunload", function (event) {
+		var req = new XMLHttpRequest();
+		req.open("POST", window.location.href + "kill");
+		req.send();
+	});
 </script>
