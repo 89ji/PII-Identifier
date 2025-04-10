@@ -1,0 +1,23 @@
+Names
+Provider Names
+Social Worker Names
+Street Addresses
+Dates of Birth
+Phone numbers
+Fax numbers
+Email addresses
+Social Security Numbers
+Medical record numbers
+Health Plan Beneficiary Numbers
+Medicaid IDs
+Account Numbers
+Certificate/License Numbers
+Serial Numbers
+Device Identifiers
+URLs
+IP Addresses
+Biometric Identifiers
+Full Face Photographic Images
+Unique identifying numbers/characteristics/codes
+Lab Results
+Hospital Names
