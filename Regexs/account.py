@@ -7,7 +7,6 @@ def account(fullText :str) -> str:
     match = account_finder.findall(fullText)
     
     if len(match) > 0:
-        print(f"Account match: {match}")
         for account in match:
             account_num = account[0].strip()
             fullText = fullText.replace(account_num, tag)

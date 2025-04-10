@@ -15,6 +15,7 @@ from Regexs.biometric import *
 from Regexs.deviceidentifiers import *
 from Regexs.url import *
 from Regexs.ipaddress import *
+from storage import Database
 from Regexs.labels import LabelwiseRemove
 
 def Contains(original :list[str], target :str) -> bool:
@@ -38,11 +39,11 @@ def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
         print("SSN removed")
 
     if Contains(phiToRemove, "Phone numbers"):
-        fullText = remove_phone_numbers(fullText)
+        fullText, matches = remove_phone_numbers(fullText)
         print("Phone removed")
 
     if Contains(phiToRemove, "Email addresses"):
-        fullText = remove_email_addresses(fullText)
+        fullText, matches = remove_email_addresses(fullText)
         print("Email removed")
 
     if Contains(phiToRemove, "Medicaid IDs"):
