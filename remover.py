@@ -21,6 +21,7 @@ from Regexs.biometric import *
 from Regexs.deviceidentifiers import * 
 from Regexs.url import *
 from Regexs.ipaddress import *
+from storage import Database
 
 def RemovePII(
     fullText: str,
@@ -66,11 +67,11 @@ def RemovePII(
         print("SSN removed")
 
     if re_phone:
-        fullText = remove_phone_numbers(fullText)
+        fullText, matches = remove_phone_numbers(fullText)
         print("Phone removed")
 
     if re_email:
-        fullText = remove_email_addresses(fullText)
+        fullText, matches = remove_email_addresses(fullText)
         print("Email removed")
 
     if re_medicaid:
