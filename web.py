@@ -22,11 +22,20 @@ def landing():
 def static(filename):
     return static_file(filename, root="static")
 
+@post("/init")
+def initialize():
+    with open("PHI List.txt") as file:
+        contents = []
+        for item in file.readlines():
+            contents.append(item.strip())
+
+        response = {"text": contents}
+        return response
 
 @post("/PII")
 def processPII():
     data = request.json
-
+    phisToRemove = data["phis"]
     fullText = data["text"]
     re_name = data["FilterName"]
     re_address = data["FilterAddress"]
@@ -72,6 +81,9 @@ def processPII():
         re_beneficiaries,
         re_uniqueID,
     )
+    allergies = data["AllergiesInput"]
+
+    processedText = RemovePII(fullText, phisToRemove.split("\n"), allergies)
 
     response = {"text": processedText}
     return response

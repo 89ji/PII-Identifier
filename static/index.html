@@ -1,69 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>PII Deidentifier</title>
-    <meta name="A simple frontend for our PII deidentifier" content="" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/sakura.css/css/sakura.css"
-      type="text/css"
-    />
-    <link rel="stylesheet" href="/static/style.css" type="text/css" />
-  </head>
-  <body>
-    <h1>DHIS Project - Group 3</h1>
-    <br />
 
-    <div class="inputContainer">
-      <div>
-        <label>Input Text</label>
-        <textarea
-          id="inputText"
-          placeholder="Paste medical info here"
-        ></textarea>
-      </div>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>PII Deidentifier</title>
+	<meta name="A simple frontend for our PII deidentifier" content="" />
+	<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css" />
+	<link rel="stylesheet" href="/static/style.css" type="text/css" />
+</head>
 
-      <div>
-        <label>Output Text</label>
-        <textarea
-          id="outputText"
-          placeholder="Deidentified medical info will show up here"
-          readonly="true"
-        ></textarea>
-      </div>
-    </div>
+<body>
+	<h1>DHIS Project - Group 3</h1>
+	<br />
 
-    <div class="typeToggler">
-      <label>Names</label>
-      <input type="checkbox" checked />
-    </div>
+	<div class="inputContainer">
+		<div>
+			<label>Input Text</label>
+			<textarea id="inputText" placeholder="Paste medical info here"></textarea>
+		</div>
 
-    <div class="typeToggler">
-      <label>Address</label>
-      <input type="checkbox" checked />
-    </div>
+		<div>
+			<label>Output Text</label>
+			<textarea id="outputText" placeholder="Deidentified medical info will show up here"
+				readonly="true"></textarea>
+		</div>
+	</div>
 
-    <div class="typeToggler">
-      <label>Date of Birth</label>
-      <input type="checkbox" checked />
-    </div>
+	<label>Removable PHIs</label>
+	<div id="buttonHolder">
+		<div class="buttonColumn">
+			<div class="typeToggler" id="template">
+				<input type="checkbox" checked />
+				<label>Template toggler lol</label>
+			</div>
+		</div>
+	</div>
 
-    <div class="typeToggler">
-      <label>Social Security Number</label>
-      <input type="checkbox" checked />
-    </div>
+	<div class="typeToggler">
+		<label>Allergies</label>
+		<input id="allergiesBox" type="checkbox" unchecked />
+		<input id="allergiesText" type="text" placeholder="List of allergies (comma separated)" />
+	</div>
 
-    <div class="typeToggler">
-      <label>Phone Number</label>
-      <input type="checkbox" checked />
-    </div>
 
-    <div class="typeToggler">
-      <label>Email</label>
-      <input type="checkbox" checked />
-    </div>
+	<button onclick="sendPII()">Send</button>
+</body>
 
     <div class="typeToggler">
       <label>Provider Name</label>
@@ -186,22 +168,79 @@
       FilterBeneficiary: beneficiary_checkbox,
       FilterUniqueID: uniqueID_checkbox,
     };
+</html>
 
-    response = await fetch(window.location.href + "PII", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    text = await response.json();
+<script>
+	async function sendPII() {
+		phiToRemove = "";
 
-    document.getElementById("outputText").value = text["text"];
-  }
+		for (const phi of phiList) {
+			if (document.getElementById(phi).childNodes[1].checked) phiToRemove = phiToRemove.concat(phi, "\n");
+		}
 
-  window.addEventListener("beforeunload", function (event) {
-    var req = new XMLHttpRequest();
-    req.open("POST", window.location.href + "kill");
-    req.send();
-  });
+		allergiesList = ""
+		if (document.getElementById("allergiesBox").checked) {
+			phiToRemove = phiToRemove.concat("allergies", "\n");
+			allergiesList = document.getElementById("allergiesText").value;
+		}
+
+		data = {
+			text: document.getElementById("inputText").value,
+			phis: phiToRemove,
+			AllergiesInput: allergiesList,
+		};
+		
+
+		response = await fetch(window.location.href + "PII", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+		text = await response.json();
+
+		document.getElementById("outputText").value = text["text"];
+	}
+
+	phiList = "";
+	const columns = 2;
+	window.addEventListener("load", async function (event) {
+		response = await fetch(window.location.href + "init", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		text = await response.json();
+		phiList = text.text;
+
+		const template = document.getElementById("template");
+		column = template.parentNode;
+		holder = column.parentNode;
+		template.remove();
+
+		columnList = [column];
+		for (let i=0; i<columns-1; i++) {
+			clone = column.cloneNode();
+			holder.append(clone);
+			columnList.push(clone);
+		}
+
+		columnPtr = 0;
+		for (let i = 0; i < phiList.length; i++) {
+			clone = template.cloneNode(true);
+			clone.id = phiList[i]
+			clone.childNodes[3].innerHTML = phiList[i]
+			columnList[columnPtr].append(clone);
+			columnPtr++;
+			if (columnPtr >= columnList.length) columnPtr = 0;
+		}
+	});
+
+	window.addEventListener("beforeunload", function (event) {
+		var req = new XMLHttpRequest();
+		req.open("POST", window.location.href + "kill");
+		req.send();
+	});
 </script>

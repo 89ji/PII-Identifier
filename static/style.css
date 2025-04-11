@@ -9,11 +9,24 @@ textarea
     display: flex;
     gap: 10px;
     justify-content: center;
+    vertical-align: middle;
+}
+
+#buttonHolder
+{
+    display: flex;
+    gap: 50px;
+}
+
+.buttonColumn
+{
 }
 
 .typeToggler
 {
     display: flex;
     gap: 10px;
-    justify-content: center;
+    justify-content: left;
+    margin: 10px;
 }
+

@@ -18,5 +18,4 @@ def removeUniqueID(text):
         else:
             new_text.append(line)
         
-
     return "\n".join(new_text)
