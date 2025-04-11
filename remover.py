@@ -14,7 +14,7 @@ from Regexs.uniqueID import *
 from Regexs.biometric import *
 from Regexs.deviceidentifiers import *
 from Regexs.url import *
-from Regexs.ipaddress import *
+from Regexs.ip_address import *
 from storage import Database
 from Regexs.labels import LabelwiseRemove
 
@@ -113,7 +113,10 @@ def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
     re_provider = Contains(phiToRemove, "Provider Names")
     re_social_worker = Contains(phiToRemove, "Social Worker Names")
     if re_name or re_provider or re_social_worker:
-        fullText = remove_names(fullText, re_name, re_provider, re_social_worker)
+        fullText, removed_names, removed_providers, removed_social_workers = remove_names(fullText, re_name, re_provider, re_social_worker)
+        print(f"Names removed: {removed_names}")
+        print(f"Social Workers removed: {removed_social_workers}")
+        print(f"Providers removed: {removed_providers}")
         print("Name removed")
 
     if Contains(phiToRemove, "Biometric Identifiers"):
