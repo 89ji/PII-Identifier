@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>PII Reidentifier</title>
+	<meta name="A simple frontend for our PII reidentifier" content="" />
+	<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css" />
+	<link rel="stylesheet" href="/static/style.css" type="text/css" />
+</head>
+
+<body>
+	<h1>DHIS Project - Group 3</h1>
+
+	<div class="inputContainer">
+		<div>
+			<label>Input Text</label>
+			<textarea id="inputText" placeholder="Paste deidentified medical info here"></textarea>
+		</div>
+
+		<div>
+			<label>Output Text</label>
+			<textarea id="outputText" placeholder="Reidentified medical info will show up here"
+				readonly="true"></textarea>
+		</div>
+	</div>
+
+	<label>Replacable PHIs</label>
+	<div id="buttonHolder">
+		<div class="buttonColumn">
+			<div class="typeToggler" id="template">
+				<input type="checkbox" checked />
+				<label>Template toggler lol</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="typeToggler">
+		<label>Allergies</label>
+		<input id="allergiesBox" type="checkbox" unchecked />
+		<input id="allergiesText" type="text" placeholder="List of allergies (comma separated)" />
+	</div>
+
+
+	<button onclick="sendPII()">Send</button>
+	<br>
+
+	<div class="buttonColumn">
+		<a href="/remover">Go to deidentifier</a>
+		<button onclick="killServer()">💀 Kill server</button>
+	</div>
+</body>
+
+</html>
+
+<script>
+	async function sendPII() {
+		phiToRemove = "";
+
+		for (const phi of phiList) {
+			if (document.getElementById(phi).childNodes[1].checked) phiToRemove = phiToRemove.concat(phi, "\n");
+		}
+
+		allergiesList = ""
+		if (document.getElementById("allergiesBox").checked) {
+			phiToRemove = phiToRemove.concat("allergies", "\n");
+			allergiesList = document.getElementById("allergiesText").value;
+		}
+
+		data = {
+			text: document.getElementById("inputText").value,
+			phis: phiToRemove,
+			AllergiesInput: allergiesList,
+		};
+		
+
+		response = await fetch("http://localhost:1986/RestorePII", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+		text = await response.json();
+
+		document.getElementById("outputText").value = text["text"];
+	}
+
+	phiList = "";
+	const columns = 2;
+	window.addEventListener("load", async function (event) {
+		response = await fetch("http://localhost:1986/init", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		text = await response.json();
+		phiList = text.text;
+
+		const template = document.getElementById("template");
+		column = template.parentNode;
+		holder = column.parentNode;
+		template.remove();
+
+		columnList = [column];
+		for (let i=0; i<columns-1; i++) {
+			clone = column.cloneNode();
+			holder.append(clone);
+			columnList.push(clone);
+		}
+
+		columnPtr = 0;
+		for (let i = 0; i < phiList.length; i++) {
+			clone = template.cloneNode(true);
+			clone.id = phiList[i]
+			clone.childNodes[3].innerHTML = phiList[i]
+			columnList[columnPtr].append(clone);
+			columnPtr++;
+			if (columnPtr >= columnList.length) columnPtr = 0;
+		}
+	});
+
+	function killServer () {
+		var req = new XMLHttpRequest();
+		req.open("POST", "http://localhost:1986/kill");
+		req.send();
+	}
+</script>

@@ -1,6 +1,7 @@
 from bottle import Bottle, route, run, template, static_file, post, request
 import webbrowser
 from remover import RemovePII
+from restorer import RestorePII
 import sys
 
 
@@ -15,12 +16,19 @@ def StartWebserver():
 
 @route("/")
 def landing():
-    return static_file("index.html", "static")
+    return static_file("remover_index.html", "static")
 
+@route("/remover")
+def remover():
+    return static_file("remover_index.html", "static")
+
+@route("/replacer")
+def replacer():
+    return static_file("replacer_index.html", "static")
 
 @route("/static/<filename:path>")
 def static(filename):
-    return static_file(filename, root="static")
+    return static_file(filename, "static")
 
 @post("/init")
 def initialize():
@@ -43,6 +51,19 @@ def processPII():
 
     response = {"text": processedText}
     return response
+
+@post("/RestorePII")
+def restorePII():
+    data = request.json
+    phisToRemove = data["phis"]
+    fullText = data["text"]
+    allergies = data["AllergiesInput"]
+
+    processedText = RestorePII(fullText, phisToRemove)
+
+    response = {"text": processedText}
+    return response
+
 
 
 @post("/kill")
