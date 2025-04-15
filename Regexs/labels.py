@@ -9,18 +9,11 @@ def LabelwiseRemove(tag :str, fullText :str, label :str, content :str = r".*") -
     groups = CountMatchGroups(label)
 
     regex = re.compile(f".*{label}.*: ?({content})", re.I)
-    print(regex.pattern)
     matches = regex.finditer(fullText)
     matchList = []
     for match in matches:
-        print(match)
-        print(f"there are {groups} groups")
-
         item = match.group(groups + 1)
-
-        print(f"item is {item}")
         matchList.append(item)
-        print(f"args to replace are {item} and {tag}")
         fullText = fullText.replace(item, tag)
     return (fullText, matchList)
 

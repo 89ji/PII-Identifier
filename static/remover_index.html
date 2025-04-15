@@ -12,7 +12,6 @@
 
 <body>
 	<h1>DHIS Project - Group 3</h1>
-	<br />
 
 	<div class="inputContainer">
 		<div>
@@ -45,6 +44,12 @@
 
 
 	<button onclick="sendPII()">Send</button>
+	<br>
+	<br>
+	<div class="buttonColumn">
+		<a href="/replacer">Go to reidentifier</a>
+		<button onclick="killServer()">💀 Kill server</button>
+	</div>
 </body>
 
 </html>
@@ -70,7 +75,7 @@
 		};
 		
 
-		response = await fetch(window.location.href + "PII", {
+		response = await fetch("http://localhost:1986/PII", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -85,7 +90,7 @@
 	phiList = "";
 	const columns = 2;
 	window.addEventListener("load", async function (event) {
-		response = await fetch(window.location.href + "init", {
+		response = await fetch("http://localhost:1986/init", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -117,9 +122,9 @@
 		}
 	});
 
-	window.addEventListener("beforeunload", function (event) {
+	function killServer () {
 		var req = new XMLHttpRequest();
-		req.open("POST", window.location.href + "kill");
+		req.open("POST", "http://localhost:1986/kill");
 		req.send();
-	});
+	}
 </script>
