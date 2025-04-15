@@ -2,7 +2,12 @@ from typing import List, Dict
 from storage import *
 import hashlib
 
-def RestorePII(fullText :str, toRestore :str) -> str:
+ERROR_MSG = '''The provided text was not found in the database!
+Make sure it was processed with the remover first.
+Do not modify any non-whitespace characters in the text.
+'''
+
+def RestorePII(fullText :str) -> str:
     db = instance
 
 
@@ -14,7 +19,10 @@ def RestorePII(fullText :str, toRestore :str) -> str:
     hasher.update(strippedText.encode())
     identifier = hasher.hexdigest()
 
-    dict: Dict[str, List[bytes]] = db.retrieve_phi(identifier)
+    try:
+        dict: Dict[str, List[bytes]] = db.retrieve_phi(identifier)
+    except:
+        return ERROR_MSG
 
     for tag in dict:
         phiList = dict[tag]

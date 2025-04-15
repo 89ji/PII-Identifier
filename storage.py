@@ -5,7 +5,6 @@ class Database:
         self.key = Fernet.generate_key()
         self.cipher = Fernet(self.key)
         self.storage = {}
-        instance = self
 
     def store_phi(self, identifier, phi_lists):
         self.storage[identifier] = {} 
@@ -15,6 +14,9 @@ class Database:
             self.storage[identifier][type] = phi_list
 
     def retrieve_phi(self, identifier):
+        if identifier not in self.storage:
+            raise Exception("Key not in DB")
+
         phi_lists = {}
         for type, phi_list in self.storage[identifier].items():
             phi_list = [self.cipher.decrypt(item) for item in phi_list]

@@ -55,11 +55,9 @@ def processPII():
 @post("/RestorePII")
 def restorePII():
     data = request.json
-    phisToRemove = data["phis"]
     fullText = data["text"]
-    allergies = data["AllergiesInput"]
 
-    processedText = RestorePII(fullText, phisToRemove)
+    processedText = RestorePII(fullText)
 
     response = {"text": processedText}
     return response
