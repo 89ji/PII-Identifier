@@ -15,7 +15,7 @@ from Regexs.biometric import *
 from Regexs.deviceidentifiers import *
 from Regexs.url import *
 from Regexs.ip_address import *
-from storage import Database
+from storage import *
 from storer import Storer
 from Regexs.labels import LabelwiseRemove
 
@@ -23,7 +23,7 @@ def Contains(original :list[str], target :str) -> bool:
     return target in original
 
 
-db = Database()
+db = instance
 
 def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
     storer = Storer(db)

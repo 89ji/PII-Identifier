@@ -21,4 +21,4 @@ class Database:
             phi_lists[type] = phi_list
         return phi_lists
     
-instance: Database = None
+instance: Database = Database()

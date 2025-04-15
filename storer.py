@@ -17,7 +17,7 @@ class Storer:
         self.__db = db
 
     def StoreNames(self, items :List[str]):
-        self.__dict["*fax number*"] = EncodeAll(items)
+        self.__dict["*name*"] = EncodeAll(items)
 
     def StoreProviders(self, items :List[str]):
         self.__dict["*provider*"] = EncodeAll(items)
