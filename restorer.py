@@ -1,6 +1,7 @@
 from typing import List, Dict
 from storage import *
 import hashlib
+from storer import Storer
 
 
 tag2name = {
@@ -50,11 +51,21 @@ def RestorePII(fullText :str, toRestore :str) -> str:
     except:
         return ERROR_MSG
 
+    containsUnreplaced = False
+
     for tag in dict:
         phiName = tag2name[tag]
         if phiName in toRestore:
             phiList = dict[tag]
             for phi in phiList:
                 fullText = fullText.replace(tag, phi.decode(), 1)
+        else:
+            containsUnreplaced = True
+
+    # After removing stuff, if any leftovers exist, store the new hash so that can further be removed
+    if containsUnreplaced:
+        s = Storer(db)
+        s.__dict = dict
+        s.Save(fullText)
         
     return fullText
