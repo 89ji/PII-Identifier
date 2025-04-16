@@ -23,9 +23,10 @@ tag2name = {
     "*url*": "URLs",
     "*ip*": "IP Addresses",
     "*biometric*": "Biometric Identifiers",
-    "*Unique Code*": "Unique identifying numbers/characteristics/codes",
+    "*uniqueID*": "Unique identifying numbers/characteristics/codes",
     "*lab results*": "Lab Results",
-    "*hospital*": "Hospital Names"
+    "*hospital*": "Hospital Names",
+    "*license_num*": "Certificate/License Numbers"
 }
 
 
