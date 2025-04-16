@@ -57,6 +57,9 @@ class Storer:
 
     def StoreCertNum(self, items :List[str]):
         self.__dict["*certificate_num*"] = EncodeAll(items)
+    
+    def StoreLicenseNum(self, items :List[str]):
+        self.__dict["*license_num*"] = EncodeAll(items)
 
     def StoreSerial(self, items :List[str]):
         self.__dict["*serial number*"] = EncodeAll(items)
@@ -71,13 +74,16 @@ class Storer:
         self.__dict["*ip*"] = EncodeAll(items)
 
     def StoreBiomentricIDs(self, items :List[str]):
-        self.__dict["*biometric* "] = EncodeAll(items)
+        self.__dict["*biometric*"] = EncodeAll(items)
 
     def StoreUniqueIdNums(self, items :List[str]):
-        self.__dict["*Unique Code*"] = EncodeAll(items)
+        self.__dict["*uniqueID*"] = EncodeAll(items)
 
     def StoreLabResults(self, items :List[str]):
         self.__dict["*lab results*"] = EncodeAll(items)
+    
+    def StoreAllergies(self, items :List[str]):
+        self.__dict["*allergies*"] = EncodeAll(items)
 
     def StoreHospitals(self, items :List[str]):
         self.__dict["*hospital*"] = EncodeAll(items)

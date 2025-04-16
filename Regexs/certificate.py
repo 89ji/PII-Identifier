@@ -4,21 +4,19 @@ def certificate(fullText: str) -> str:
     certificate_tag = "*certificate_num*"
 
     certificate_finder = re.compile(r"[cC]ertificate(?: [nN]umber)?:\s?([A-Z]{2}\d{3}[a-z]-?\d{4})")
-    match = certificate_finder.findall(fullText)
+    cert_matches = []
 
-    if len(match) > 0:
-        for certificate in match:
-            certificate_num = certificate.strip()
-            fullText = fullText.replace(certificate_num, certificate_tag)
+    for match in certificate_finder.finditer(fullText):
+        cert_matches.append(match.group(1))
+        fullText = fullText.replace(match.group(1), certificate_tag, 1)
     
     license_tag = "*license_num*"
 
     license_finder = re.compile(r"[lL]icense(?: [nN]umber)?:\s?([A-Z]{2}\d{2}-?\d{6})")
-    match = license_finder.findall(fullText)
+    license_matches = []
     
-    if len(match) > 0:
-        for license_num in match:
-            license_num = license_num.strip()
-            fullText = fullText.replace(license_num, license_tag)
+    for match in license_finder.finditer(fullText):
+        license_matches.append(match.group(1))
+        fullText = fullText.replace(match.group(1), license_tag, 1)
 
-    return fullText
+    return fullText, cert_matches, license_matches
