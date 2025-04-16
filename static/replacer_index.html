@@ -35,12 +35,6 @@
 				</div>
 			</div>
 		</div>
-	
-		<div class="typeToggler">
-			<label>Allergies</label>
-			<input id="allergiesBox" type="checkbox" unchecked />
-			<input id="allergiesText" type="text" placeholder="List of allergies (comma separated)" />
-		</div>
 
 	<button onclick="sendPII()">Send</button>
 	<br>
@@ -89,9 +83,51 @@
 
 
 
+	window.addEventListener("load", async function (event) {
+		response = await fetch("http://localhost:1986/init", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		text = await response.json();
+		phiList = text.text;
+
+		const template = document.getElementById("template");
+		column = template.parentNode;
+		holder = column.parentNode;
+		template.remove();
+
+		columnList = [column];
+		for (let i=0; i<columns-1; i++) {
+			clone = column.cloneNode();
+			holder.append(clone);
+			columnList.push(clone);
+		}
+
+		columnPtr = 0;
+		for (let i = 0; i < phiList.length; i++) {
+			clone = template.cloneNode(true);
+			clone.id = phiList[i]
+			clone.childNodes[3].innerHTML = phiList[i]
+			columnList[columnPtr].append(clone);
+			columnPtr++;
+			if (columnPtr >= columnList.length) columnPtr = 0;
+		}
+	});
+
+
+
 	async function sendPII() {
+		phiToRemove = "";
+		for (const phi of phiList)
+		{
+			if (document.getElementById(phi).childNodes[1].checked) phiToRemove = phiToRemove.concat(phi, "\n");
+		}
+
 		data = {
 			text: document.getElementById("inputText").value,
+			phis: phiToRemove
 		};
 
 

@@ -56,8 +56,9 @@ def processPII():
 def restorePII():
     data = request.json
     fullText = data["text"]
+    phisToRestore = data["phis"]
 
-    processedText = RestorePII(fullText)
+    processedText = RestorePII(fullText, phisToRestore.split("\n"))
 
     response = {"text": processedText}
     return response
