@@ -1,21 +1,19 @@
 import re
 
 def removeUniqueID(text):
-    lines = text.split("\n")
-    new_text = []
+    matches = []
     devPhrases = [
     r"\bcode\b",                  # code
     r"\bID\b",                    # ID
     ]
+    devPhrase = "("
 
-    for line in lines:
+    for phrase in devPhrases:
+        devPhrase += phrase + "|"
+    devPhrase = devPhrase[:-1] + r"):?\s?(\d+)"
 
-        # Detect lab results section
-        if any(re.search(phrase, line, re.IGNORECASE) for phrase in devPhrases): #sees tag and replaces after
-            # Replace text after colon with "*device ID*"
-            new_line = re.sub(r"(:\s*)(.+)", r"\1*Unique Code*", line)
-            new_text.append(new_line)
-        else:
-            new_text.append(line)
-        
-    return "\n".join(new_text)
+    for match in re.finditer(devPhrase, text, re.IGNORECASE):
+        matches.append(match.group(2))
+        text = text.replace(match.group(2), "*uniqueID*", 1)
+
+    return text, matches

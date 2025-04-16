@@ -3,24 +3,32 @@ import re
 def removeLabResults(text):
     lines = text.split("\n")
     new_text = []
+    matches = []
     inside_lab_section = False  # Tracks if we're inside a section to redact
     labPhrases = [r"\bresults?\b", r"\blab results?\b", r"\btest results?\b"]
+    current_section = []
 
     for line in lines:
-        # stop if we find "Text:" (signaling end of section)
         if inside_lab_section and re.match(r"^.*:\s*$", line):
-            inside_lab_section = False  # stop ignoring
+            matches.append('\n'.join(current_section).strip())
+            current_section = []
+            inside_lab_section = False
 
-        # Ignore lab results sections
+        if inside_lab_section:
+            current_section.append(line)
+
         if not inside_lab_section:
             for phrase in labPhrases:
                 if re.search(phrase, line, re.IGNORECASE):
-                    inside_lab_section = True  # Start ignoring
-                    new_text.append("*lab results*\n")  # Redact with placeholder
-                    break  # Skip this line
+                    inside_lab_section = True
+                    current_section = [line]
+                    new_text.append("*lab results*\n")
+                    break
         
-        # Keep lines that are not part of the redacted section
         if not inside_lab_section:
             new_text.append(line)
 
-    return "\n".join(new_text)
+    if inside_lab_section and current_section:
+        matches.append('\n'.join(current_section))
+
+    return "\n".join(new_text), matches

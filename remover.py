@@ -20,13 +20,16 @@ from storer import Storer
 from Regexs.labels import LabelwiseRemove
 
 def Contains(original :list[str], target :str) -> bool:
-    return target in original
+    return target.lower() in original
 
 
 db = instance
 
 def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
     storer = Storer(db)
+
+    phiToRemove = [item.lower() for item in phiToRemove]
+    allergies = allergies.lower()
 
     if Contains(phiToRemove, "Fax numbers"):
         fullText, removed = LabelwiseRemove("*fax number*", fullText, r"(fax number|fax no\.?)")
@@ -38,15 +41,15 @@ def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
         storer.StoreAddresses(removed)
         print(f"Addresses: {removed}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Dates of Birth"):
-        fullText = removeDOB(fullText)
+        fullText, removed = removeDOB(fullText)
+        storer.StoreDOB(removed)
         print(f"DOBs: {removed}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Social Security Numbers"):
-        fullText = removeSSN(fullText)
-        print("SSN removed")
+        fullText, removed = removeSSN(fullText)
+        storer.StoreSSN(removed)
+        print(f"SSNs: {removed}")
 
 
     if Contains(phiToRemove, "Phone numbers"):
@@ -69,30 +72,32 @@ def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
         storer.StoreMedicareID(removed)
         print(f"Medicaid IDs: {removed}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Lab Results"):
-        fullText = removeLabResults(fullText)
-        print("Lab results removed")
+        fullText, removed = removeLabResults(fullText)
+        storer.StoreLabResults(removed)
+        print(f"Lab results: {removed}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Allergies"):
-        fullText = RemoveAllergies(fullText, allergies)
-        print("Allergies removed")
+        fullText, removed = RemoveAllergies(fullText, allergies)
+        storer.StoreAllergies(removed)
+        print(f"Allergies: {removed}")
 
     if Contains(phiToRemove, "Hospital Names"):
         fullText, removed = LabelwiseRemove("*hospital*", fullText, r"hospital")
         storer.StoreHospitals(removed)
         print(f"Hospital names: {removed}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Account Numbers"):
-        fullText = account(fullText)
-        print("Account removed")
+        fullText, removed = account(fullText)
+        storer.StoreAccountNum(removed)
+        print(f"Account numbers: {removed}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Certificate/License Numbers"):
-        fullText = certificate(fullText)
-        print("Certificate removed")
+        fullText, removed_certifications, removed_licenses = certificate(fullText)
+        storer.StoreCertNum(removed_certifications)
+        storer.StoreLicenseNum(removed_licenses)
+        print(f"Certificate numbers: {removed_certifications}")
+        print(f"License numbers: {removed_licenses}")
 
     if Contains(phiToRemove, "Serial Numbers"):
         fullText, removed = LabelwiseRemove("*serial number*", fullText, r"serial")
@@ -115,10 +120,10 @@ def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
         storer.StoreHealthPlanBeneficiaryNum(removed)
         print(f"Beneficiary numbers: {removed}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Unique identifying numbers/characteristics/codes"):
-        fullText = removeUniqueID(fullText)
-        print("Unique IDs removed")
+        fullText, removed = removeUniqueID(fullText)
+        storer.StoreUniqueIdNums(removed)
+        print(f"Unique IDs: {removed}")
 
     if Contains(phiToRemove, "Device Identifiers"):
         fullText, removed = remove_device_identifiers(fullText)
@@ -147,10 +152,10 @@ def RemovePII(fullText :str, phiToRemove :list[str], allergies :str) -> str:
         print(f"Social Workers removed: {removed_social_workers}")
         print(f"Providers removed: {removed_providers}")
 
-    # Needs removed list!
     if Contains(phiToRemove, "Biometric Identifiers"):
-        fullText = bio_identifiers(fullText)
-        print("Biometric removed")
+        fullText, removed = bio_identifiers(fullText)
+        storer.StoreBiomentricIDs(removed)
+        print(f"Biometric IDs: {removed}")
 
     storer.Save(fullText)
 
