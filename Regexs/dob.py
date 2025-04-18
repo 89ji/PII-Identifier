@@ -3,6 +3,7 @@ import re
 def removeDOB(text):
     returnPhrase = ""
     lines = text.split("\n")
+    removed_values = []
 
     for x in lines:
         # the find regex patterns
@@ -16,9 +17,13 @@ def removeDOB(text):
                 
                 # replacement time
                 for z in datePhrases:
+                    match = re.search(z, x , re.IGNORECASE)
+                    if match:
+                        removed_values.append(match.group(0).strip())
+
                     x = re.sub(z, "*dob*", x, flags=re.IGNORECASE)
 
         # store line, also any modifications
         returnPhrase += x + "\n"
 
-    return returnPhrase
+    return (returnPhrase, removed_values)
