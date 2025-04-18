@@ -1,6 +1,6 @@
 import re
 
-def certificate(fullText: str) -> str:
+def removeCertificate(fullText: str) -> str:
     certificate_tag = "*certificate_num*"
     license_tag = "*license_num*"
 

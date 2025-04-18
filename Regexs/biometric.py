@@ -1,6 +1,6 @@
 import re
 
-def bio_identifiers(fullText):
+def removeBioidentifiers(fullText):
     biometric_tag = "*biometric*"
     removed = []
 

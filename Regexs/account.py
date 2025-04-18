@@ -1,6 +1,6 @@
 import re
 
-def account(fullText: str):
+def removeAccount(fullText: str):
     tag = "*account_num*"
     removed = []
 

@@ -8,3 +8,7 @@ Installation:
   4. Run python -m spacy download en_core_web_trf
 
 Make sure you use python 3.12 and not 3.13.
+
+The best way I found to read the database is just to use an indepedent browser.
+
+https://sqlitebrowser.org/dl/

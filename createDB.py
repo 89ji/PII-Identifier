@@ -1,7 +1,11 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+import os
 
-import sqlite3
+# # remove intially if needed
+
+# if os.path.exists("PII.db"):
+#     os.remove("PII.db")
 
 Base = declarative_base()
 
@@ -26,6 +30,8 @@ class PII(Base):
     medicaid = Column(String)
     medicalrecordnumbers = Column(String)
     name = Column(String)
+    socialworkername = Column(String)
+    providername = Column(String)
     phone = Column(String)
     planBeneficiaryNumber = Column(String)
     serial = Column(String)
@@ -74,7 +80,7 @@ session = Session()
 # # Delete all rows in the 'PII' table
 # session.query(PII).delete()
 
-session.commit()  # Don’t forget to commit!
+session.commit()  
 
 ######################################## example print #####################################
 
