@@ -1,14 +1,20 @@
 import re
 
-def account(fullText :str) -> str:
+def account(fullText: str):
     tag = "*account_num*"
+    removed = []
+
+    account_finder = re.compile(
+        r"Account(?: number)?:\s?((\d|\*){4}(\s|-)?(\d|\*){4}(\s|-)?(\d|\*){4}(\s|-)?(\d|\*){4})",
+        re.IGNORECASE
+    )
     
-    account_finder = re.compile(r"Account(?: number)?:\s?((\d|\*){4}(\s|-)?(\d|\*){4}(\s|-)?(\d|\*){4}(\s|-)?(\d|\*){4})", re.IGNORECASE)
-    match = account_finder.findall(fullText)
+    matches = account_finder.findall(fullText)
     
-    if len(match) > 0:
-        for account in match:
-            account_num = account[0].strip()
+    if matches:
+        for match in matches:
+            account_num = match[0].strip()
+            removed.append(account_num)
             fullText = fullText.replace(account_num, tag)
 
-    return fullText
+    return fullText, removed
