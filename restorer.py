@@ -54,13 +54,22 @@ def RestorePII(fullText :str, toRestore :str) -> str:
     containsUnreplaced = False
 
     for tag in dict:
-        phiName = tag2name[tag]
-        if phiName in toRestore:
-            phiList = dict[tag]
-            for phi in phiList:
-                fullText = fullText.replace(tag, phi.decode(), 1)
+        # Managing the special allergies case
+        if tag == "*allergies*":
+            if "Allergies" in toRestore:
+                phiList = dict["*allergies*"]
+                for phi in phiList:
+                    fullText = fullText.replace("*allergies*", phi.decode(), 1)
+            else:
+                containsUnreplaced = True
         else:
-            containsUnreplaced = True
+            phiName = tag2name[tag]
+            if phiName in toRestore:
+                phiList = dict[tag]
+                for phi in phiList:
+                    fullText = fullText.replace(tag, phi.decode(), 1)
+            else:
+                containsUnreplaced = True
 
     # After removing stuff, if any leftovers exist, store the new hash so that can further be removed
     if containsUnreplaced:
