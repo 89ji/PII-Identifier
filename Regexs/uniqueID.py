@@ -5,6 +5,7 @@ def removeUniqueID(text):
     devPhrases = [
     r"\bcode\b",                  # code
     r"\bID\b",                    # ID
+    r"group no."                  # group no.            
     ]
     devPhrase = "("
 
