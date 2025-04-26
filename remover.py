@@ -15,7 +15,7 @@ from Regexs.biometric import *
 from Regexs.deviceidentifiers import *
 from Regexs.url import *
 from Regexs.ip_address import *
-from storage import *
+from dbstorage import *
 from storer import Storer
 from Regexs.labels import LabelwiseRemove
 
