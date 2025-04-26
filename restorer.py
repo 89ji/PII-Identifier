@@ -1,7 +1,6 @@
 from typing import List, Dict
-from storage import *
 import hashlib
-from storer import Storer
+from dbstorage import *
 
 
 tag2name = {

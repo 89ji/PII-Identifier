@@ -1,5 +1,5 @@
 from typing import List, Dict
-from storage import Database
+from dbstorage import Database
 import hashlib
 
 def EncodeAll(inp :List[str]) -> List[bytes]: 
